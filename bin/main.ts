@@ -45,6 +45,8 @@ ciCd.addCdkDeployEnvStageToPipeline({
 });
 
 // Extend the Dev SolarSystem, by creating out service
-const tst = new AppSolarSystemStack(devGalaxy, "Tst");
+const tst = new AppSolarSystemStack(devGalaxy, "Tst", {
+  tag: process.env.APP_BUILD_VERSION || "latest"
+});
 // Add a Deployment stage in out App Pipeline to target this
 ciCd.addCdkDeployEnvStageToPipeline({ solarSystem: tst });
