@@ -9,37 +9,44 @@ import {
   AppCiCdSolarSystemStack
 } from "../lib";
 
+// Cdk App
 const app = new App();
 
+// AWS Env Config
 const mgtEnvConfig = { account: "1111", region: "ap-southeast-2" };
 const devEnvConfig = { account: "2222", region: "ap-southeast-2" };
 
-// Project Level Infra
+// Extend the Cosmos + Add our App bits
 const cosmos = new AppCosmosStack(app, "DemoApp", {
   env: mgtEnvConfig
 });
 
-// Account Level Infra
+// Extend the Mgt Galaxy
 const mgtGalaxy = new AppGalaxyStack(cosmos, "Mgt");
 
-// CiCd Level Infra
+// Extend the CiCd SolarSystem, adding our App CiCd pipeline
 const ciCd = new AppCiCdSolarSystemStack(mgtGalaxy);
 
-// Dev Account Level Infra
+// Extends the Dev Galaxy
 const devGalaxy = new AppGalaxyStack(cosmos, "Dev", {
   env: devEnvConfig
 });
+// Allow the Dev Galaxy to access the ecr repo
 cosmos.EcrRepo.grantPull(new AccountPrincipal(devGalaxy.account));
 
-// Dev App Env Level Infra
+// Extend the Dev SolarSystem, by creating out service
 const dev = new AppSolarSystemStack(devGalaxy, "Dev", {
   tag: process.env.APP_BUILD_VERSION || "latest"
 });
+// Add a Deployment stage in out App Pipeline to target this
 ciCd.addCdkDeployEnvStageToPipeline({
   solarSystem: dev,
   isManualApprovalRequired: false
 });
 
-// Tst App Env Level Infra
-const tst = new AppSolarSystemStack(devGalaxy, "Tst");
+// Extend the Dev SolarSystem, by creating out service
+const tst = new AppSolarSystemStack(devGalaxy, "Tst", {
+  tag: process.env.APP_BUILD_VERSION || "latest"
+});
+// Add a Deployment stage in out App Pipeline to target this
 ciCd.addCdkDeployEnvStageToPipeline({ solarSystem: tst });
