@@ -5,7 +5,7 @@ import { AppCosmosStack } from ".";
 export class AppGalaxyStack extends GalaxyExtensionStack {
   readonly Cosmos: AppCosmosStack;
 
-  constructor(cosmos: AppCosmosStack, id: string, props?: StackProps) {
-    super(cosmos, id, props);
+  constructor(cosmos: AppCosmosStack, name: string, props?: StackProps) {
+    super(cosmos, name, props);
   }
 }
