@@ -7,8 +7,8 @@ export class AppCosmosStack extends CosmosExtensionStack {
   readonly CodeRepo: CodeRepository;
   readonly EcrRepo: EcrRepository;
 
-  constructor(scope: Construct, id: string, props?: StackProps) {
-    super(scope, id, props);
+  constructor(scope: Construct, name: string, props?: StackProps) {
+    super(scope, name, props);
 
     this.CodeRepo = new CodeRepository(this, "CodeRepo", {
       repositoryName: `app-${this.Name}-main-repo`.toLocaleLowerCase()
