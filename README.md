@@ -12,7 +12,7 @@ Steps:
 
 1. Clone this repo (https://github.com/cdk-cosmos/cosmos-extension-cdk.git).
 2. Run `npm install`
-3. Open `bin/main.ts` and change the project name from `DemoApp` to your app name.
+3. Open `bin/main.ts` and change the project name from `Demo` to your app name.
 4. Aws Cli Login.
 5. Bootstrap, run `npx cdk deploy App-${Project}-${Account}-CiCd-SolarSystem` (Please change to your project and account name).
 6. Update git remote url `git remote set-url origin "https://git-codecommit.ap-southeast-2.amazonaws.com/v1/repos/app-${Project}-cdk-repo"` (Please change Project and region etc as required).
