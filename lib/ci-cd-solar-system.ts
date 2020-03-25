@@ -1,7 +1,7 @@
 import { StackProps } from "@aws-cdk/core";
 import { Repository } from "@aws-cdk/aws-codecommit";
 import { CiCdSolarSystemExtensionStack } from "@cdk-cosmos/core";
-import { addCdkDeployEnvStageToPipeline } from "@cdk-cosmos/core/lib/cdk-pipeline";
+import { addCdkDeployEnvStageToPipeline } from "@cdk-cosmos/core/lib/helpers/cdk-pipeline";
 import { AppNodePipeline } from "@cosmos-building-blocks/pipeline";
 import { AppGalaxyStack, AppSolarSystemStack } from ".";
 
