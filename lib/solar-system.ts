@@ -3,7 +3,7 @@ import { ContainerImage } from "@aws-cdk/aws-ecs";
 import {
   RESOLVE,
   PATTERN,
-  EcsSolarSystemExtensionStack
+  EcsSolarSystemExtensionStack,
 } from "@cdk-cosmos/core";
 import { EcsService } from "@cosmos-building-blocks/service";
 import { AppGalaxyStack } from ".";
@@ -26,22 +26,21 @@ export class AppSolarSystemStack extends EcsSolarSystemExtensionStack {
     const { EcrRepo } = this.Galaxy.Cosmos;
     const { Vpc, Cluster, HttpListener } = this.Portal;
 
-    new EcsService(
-      this,
-      RESOLVE(PATTERN.SHORT_SOLAR_SYSTEM, "Frontend", this),
-      {
-        vpc: Vpc,
-        cluster: Cluster,
-        httpListener: HttpListener,
-        container: {
-          image: ContainerImage.fromEcrRepository(EcrRepo, tag)
+    new EcsService(this, this.RESOLVE(PATTERN.SHORT_SOLAR_SYSTEM, "Frontend"), {
+      vpc: Vpc,
+      cluster: Cluster,
+      httpListener: HttpListener,
+      container: {
+        image: ContainerImage.fromEcrRepository(EcrRepo, tag),
+        port: {
+          containerPort: 3000,
         },
-        service: {},
-        routing: {
-          pathPattern: "/test",
-          priority: 1
-        }
-      }
-    );
+      },
+      service: {},
+      routing: {
+        pathPattern: "/demo",
+        priority: 1,
+      },
+    });
   }
 }
