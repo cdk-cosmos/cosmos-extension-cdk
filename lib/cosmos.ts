@@ -1,7 +1,7 @@
 import { Construct, StackProps } from "@aws-cdk/core";
 import { Repository as EcrRepository } from "@aws-cdk/aws-ecr";
 import { Repository as CodeRepository } from "@aws-cdk/aws-codecommit";
-import { CosmosExtensionStack } from "@cdk-cosmos/core";
+import { CosmosExtensionStack, PATTERN } from "@cdk-cosmos/core";
 
 export class AppCosmosStack extends CosmosExtensionStack {
   readonly CodeRepo: CodeRepository;
@@ -11,11 +11,17 @@ export class AppCosmosStack extends CosmosExtensionStack {
     super(scope, name, props);
 
     this.CodeRepo = new CodeRepository(this, "CodeRepo", {
-      repositoryName: `app-${this.Name}-main-repo`.toLocaleLowerCase()
+      repositoryName: this.RESOLVE(
+        PATTERN.COSMOS,
+        "Main-Repo"
+      ).toLocaleLowerCase(),
     });
 
     this.EcrRepo = new EcrRepository(this, "EcrRepo", {
-      repositoryName: `app-${this.Name}/demo`.toLowerCase()
+      repositoryName: this.RESOLVE(
+        PATTERN.DOCKER_TAG,
+        "Frontend"
+      ).toLowerCase(),
     });
   }
 }
