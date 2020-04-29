@@ -30,14 +30,13 @@ export class AppSolarSystemStack extends EcsSolarSystemExtensionStack {
       vpc: Vpc,
       cluster: Cluster,
       httpListener: HttpListener,
-      container: {
+      containerProps: {
         image: ContainerImage.fromEcrRepository(EcrRepo, tag),
         port: {
           containerPort: 3000,
         },
       },
-      service: {},
-      routing: {
+      routingProps: {
         pathPattern: "/demo",
         priority: 1,
       },
