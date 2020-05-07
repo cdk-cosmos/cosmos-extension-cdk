@@ -3,7 +3,7 @@ import { GalaxyExtensionStack } from "@cdk-cosmos/core";
 import { AppCosmosStack } from ".";
 
 export class AppGalaxyStack extends GalaxyExtensionStack {
-  readonly Cosmos: AppCosmosStack;
+  readonly cosmos: AppCosmosStack;
 
   constructor(cosmos: AppCosmosStack, name: string, props?: StackProps) {
     super(cosmos, name, props);

@@ -1,35 +1,36 @@
 import { StackProps } from "@aws-cdk/core";
 import { Repository } from "@aws-cdk/aws-codecommit";
-import { CiCdSolarSystemExtensionStack, PATTERN } from "@cdk-cosmos/core";
-import { addCdkDeployEnvStageToPipeline } from "@cdk-cosmos/core/lib/helpers/cdk-pipeline";
+import { CiCdSolarSystemExtensionStack } from "@cdk-cosmos/core";
+import { addCdkDeployEnvStageToPipeline } from "@cdk-cosmos/core/lib/components/cdk-pipeline";
 import { AppNodePipeline } from "@cosmos-building-blocks/pipeline";
 import { AppGalaxyStack, AppSolarSystemStack } from ".";
 
 export class AppCiCdSolarSystemStack extends CiCdSolarSystemExtensionStack {
-  readonly Galaxy: AppGalaxyStack;
-  readonly CodePipeline: AppNodePipeline;
+  readonly galaxy: AppGalaxyStack;
+  readonly codePipeline: AppNodePipeline;
 
   constructor(galaxy: AppGalaxyStack, props?: StackProps) {
     super(galaxy, props);
 
-    const { CodeRepo, EcrRepo } = this.Galaxy.Cosmos;
+    const { codeRepo, ecrRepo } = this.galaxy.cosmos;
 
-    this.CodePipeline = new AppNodePipeline(this, "CodePipeline", {
-      name: this.RESOLVE(PATTERN.COSMOS, "Main-Pipeline"),
+    this.codePipeline = new AppNodePipeline(this, "CodePipeline", {
+      pipelineName: this.galaxy.cosmos.generateId("Code-Pipeline", "-"),
+      buildName: this.galaxy.cosmos.generateId("Code-Build", "-"),
       codeRepo: Repository.fromRepositoryName(
         this,
-        CodeRepo.node.id,
-        CodeRepo.repositoryName
+        codeRepo.node.id,
+        codeRepo.repositoryName
       ),
       buildSpec: AppNodePipeline.DefaultBuildSpec(),
       buildEnvs: {
         ECR_URL: {
-          value: EcrRepo.repositoryUri,
+          value: ecrRepo.repositoryUri,
         },
       },
     });
 
-    this.CodePipeline.Build.role?.addManagedPolicy({
+    this.codePipeline.Build.role?.addManagedPolicy({
       managedPolicyArn: `arn:aws:iam::aws:policy/AdministratorAccess`, // FIXME:
     });
   }
@@ -40,8 +41,8 @@ export class AppCiCdSolarSystemStack extends CiCdSolarSystemExtensionStack {
   }) {
     addCdkDeployEnvStageToPipeline({
       ...props,
-      pipeline: this.CodePipeline.Pipeline,
-      deployProject: this.DeployProject,
+      pipeline: this.codePipeline.Pipeline,
+      deployProject: this.deployProject,
       deployEnvs: AppNodePipeline.DefaultAppBuildVersionStageEnv(),
     });
   }
