@@ -13,10 +13,10 @@ export class AppSolarSystemStack extends EcsSolarSystemExtensionStack {
 
   constructor(
     galaxy: AppGalaxyStack,
-    name: string,
+    id: string,
     props?: AppSolarSystemProps
   ) {
-    super(galaxy, name, props);
+    super(galaxy, id, props);
 
     const { tag = "latest" } = props || {};
     const { ecrRepo } = this.galaxy.cosmos;
