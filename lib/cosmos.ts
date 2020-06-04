@@ -11,11 +11,11 @@ export class AppCosmosStack extends CosmosExtensionStack {
     super(scope, id, props);
 
     this.codeRepo = new CodeRepository(this, "CodeRepo", {
-      repositoryName: this.generateId("Code-Repo", "-").toLowerCase(),
+      repositoryName: this.nodeId("Code-Repo", "-").toLowerCase(),
     });
 
     this.ecrRepo = new EcrRepository(this, "EcrRepo", {
-      repositoryName: this.generateId("Frontend", "/").toLowerCase(),
+      repositoryName: this.nodeId("Frontend", "/").toLowerCase(),
     });
   }
 }

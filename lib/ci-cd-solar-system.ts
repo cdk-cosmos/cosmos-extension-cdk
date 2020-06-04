@@ -15,8 +15,8 @@ export class AppCiCdSolarSystemStack extends CiCdSolarSystemExtensionStack {
     const { codeRepo, ecrRepo } = this.galaxy.cosmos;
 
     this.codePipeline = new AppNodePipeline(this, "CodePipeline", {
-      pipelineName: this.galaxy.cosmos.generateId("Code-Pipeline", "-"),
-      buildName: this.galaxy.cosmos.generateId("Code-Build", "-"),
+      pipelineName: this.galaxy.cosmos.nodeId("Code-Pipeline", "-"),
+      buildName: this.galaxy.cosmos.nodeId("Code-Build", "-"),
       codeRepo: Repository.fromRepositoryName(
         this,
         codeRepo.node.id,
