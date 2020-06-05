@@ -7,15 +7,15 @@ export class AppCosmosStack extends CosmosExtensionStack {
   readonly codeRepo: CodeRepository;
   readonly ecrRepo: EcrRepository;
 
-  constructor(scope: Construct, name: string, props?: StackProps) {
-    super(scope, name, props);
+  constructor(scope: Construct, id: string, props?: StackProps) {
+    super(scope, id, props);
 
     this.codeRepo = new CodeRepository(this, "CodeRepo", {
-      repositoryName: this.generateId("Code-Repo", "-").toLowerCase(),
+      repositoryName: this.nodeId("Code-Repo", "-").toLowerCase(),
     });
 
     this.ecrRepo = new EcrRepository(this, "EcrRepo", {
-      repositoryName: this.generateId("Frontend", "/").toLowerCase(),
+      repositoryName: this.nodeId("Frontend", "/").toLowerCase(),
     });
   }
 }
