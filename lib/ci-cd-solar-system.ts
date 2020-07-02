@@ -2,27 +2,28 @@ import { StackProps } from "@aws-cdk/core";
 import { Repository } from "@aws-cdk/aws-codecommit";
 import { CiCdSolarSystemExtensionStack } from "@cdk-cosmos/core";
 import { addCdkDeployEnvStageToPipeline } from "@cdk-cosmos/core/lib/components/cdk-pipeline";
-import { AppNodePipeline } from "@cosmos-building-blocks/pipeline";
+import { DockerPipeline } from "@cosmos-building-blocks/pipeline";
 import { AppGalaxyStack, AppSolarSystemStack } from ".";
 
 export class AppCiCdSolarSystemStack extends CiCdSolarSystemExtensionStack {
   readonly galaxy: AppGalaxyStack;
-  readonly codePipeline: AppNodePipeline;
+  readonly codePipeline: DockerPipeline;
 
   constructor(galaxy: AppGalaxyStack, props?: StackProps) {
     super(galaxy, props);
 
     const { codeRepo, ecrRepo } = this.galaxy.cosmos;
 
-    this.codePipeline = new AppNodePipeline(this, "CodePipeline", {
+    this.codePipeline = new DockerPipeline(this, "CodePipeline", {
       pipelineName: this.galaxy.cosmos.nodeId("Code-Pipeline", "-"),
       buildName: this.galaxy.cosmos.nodeId("Code-Build", "-"),
       codeRepo: Repository.fromRepositoryName(
+        // TODO: Fix me 0.5.1
         this,
         codeRepo.node.id,
         codeRepo.repositoryName
       ),
-      buildSpec: AppNodePipeline.DefaultBuildSpec(),
+      buildSpec: DockerPipeline.DefaultBuildSpec(),
       buildEnvs: {
         ECR_URL: {
           value: ecrRepo.repositoryUri,
@@ -30,7 +31,7 @@ export class AppCiCdSolarSystemStack extends CiCdSolarSystemExtensionStack {
       },
     });
 
-    this.codePipeline.Build.role?.addManagedPolicy({
+    this.codePipeline.build.role?.addManagedPolicy({
       managedPolicyArn: `arn:aws:iam::aws:policy/AdministratorAccess`, // FIXME:
     });
   }
@@ -41,9 +42,9 @@ export class AppCiCdSolarSystemStack extends CiCdSolarSystemExtensionStack {
   }) {
     addCdkDeployEnvStageToPipeline({
       ...props,
-      pipeline: this.codePipeline.Pipeline,
+      pipeline: this.codePipeline.pipeline,
       deployProject: this.deployProject,
-      deployEnvs: AppNodePipeline.DefaultAppBuildVersionStageEnv(),
+      deployEnvs: DockerPipeline.DefaultAppBuildVersionStageEnv(),
     });
   }
 }
