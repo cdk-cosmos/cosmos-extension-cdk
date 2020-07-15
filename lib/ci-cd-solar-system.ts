@@ -17,12 +17,7 @@ export class AppCiCdSolarSystemStack extends CiCdSolarSystemExtensionStack {
     this.codePipeline = new DockerPipeline(this, "CodePipeline", {
       pipelineName: this.galaxy.cosmos.nodeId("Code-Pipeline", "-"),
       buildName: this.galaxy.cosmos.nodeId("Code-Build", "-"),
-      codeRepo: Repository.fromRepositoryName(
-        // TODO: Fix me 0.5.1
-        this,
-        codeRepo.node.id,
-        codeRepo.repositoryName
-      ),
+      codeRepo: codeRepo,
       buildSpec: DockerPipeline.DefaultBuildSpec(),
       buildEnvs: {
         ECR_URL: {
@@ -31,9 +26,7 @@ export class AppCiCdSolarSystemStack extends CiCdSolarSystemExtensionStack {
       },
     });
 
-    this.codePipeline.build.role?.addManagedPolicy({
-      managedPolicyArn: `arn:aws:iam::aws:policy/AdministratorAccess`, // FIXME:
-    });
+    ecrRepo.grantPullPush(this.codePipeline.build);
   }
 
   addCdkDeployEnvStageToPipeline(props: {
