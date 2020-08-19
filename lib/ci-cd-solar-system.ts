@@ -1,7 +1,7 @@
 import { StackProps } from "@aws-cdk/core";
 import {
   SolarSystemExtensionStack,
-  CiCdSFeatureExtensionStack as CiCdFeatureExtensionStack,
+  CiCdFeatureExtensionStack,
 } from "@cdk-cosmos/core";
 import { addCdkDeployEnvStageToPipeline } from "@cdk-cosmos/core/lib/components/cdk-pipeline";
 import { DockerPipeline } from "@cosmos-building-blocks/pipeline";
