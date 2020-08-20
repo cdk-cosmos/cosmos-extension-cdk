@@ -1,16 +1,21 @@
 import { StackProps } from "@aws-cdk/core";
-import { Repository } from "@aws-cdk/aws-codecommit";
-import { CiCdSolarSystemExtensionStack } from "@cdk-cosmos/core";
+import {
+  SolarSystemExtensionStack,
+  CiCdFeatureExtensionStack,
+} from "@cdk-cosmos/core";
 import { addCdkDeployEnvStageToPipeline } from "@cdk-cosmos/core/lib/components/cdk-pipeline";
 import { DockerPipeline } from "@cosmos-building-blocks/pipeline";
 import { AppGalaxyStack, AppSolarSystemStack } from ".";
 
-export class AppCiCdSolarSystemStack extends CiCdSolarSystemExtensionStack {
+export class AppCiCdSolarSystemStack extends SolarSystemExtensionStack {
   readonly galaxy: AppGalaxyStack;
+  readonly ciCd: CiCdFeatureExtensionStack;
   readonly codePipeline: DockerPipeline;
 
   constructor(galaxy: AppGalaxyStack, props?: StackProps) {
-    super(galaxy, props);
+    super(galaxy, "CiCd", props);
+
+    this.addCiCd();
 
     const { codeRepo, ecrRepo } = this.galaxy.cosmos;
 
@@ -36,7 +41,7 @@ export class AppCiCdSolarSystemStack extends CiCdSolarSystemExtensionStack {
     addCdkDeployEnvStageToPipeline({
       ...props,
       pipeline: this.codePipeline.pipeline,
-      deployProject: this.deployProject,
+      deployProject: this.ciCd.deployProject,
       deployEnvs: DockerPipeline.DefaultAppBuildVersionStageEnv(),
     });
   }
