@@ -17,10 +17,10 @@
     "@aws-cdk/aws-elasticache": "^1.59.0",
     "@aws-cdk/aws-elasticloadbalancingv2-targets": "^1.59.0",
     "@aws-cdk/core": "^1.59.0",
-    "@cdk-cosmos/cdk-credentials-plugin": "^0.6.2",
-    "@cdk-cosmos/core": "^0.6.2",
-    "@cosmos-building-blocks/pipeline": "^0.6.2",
-    "@cosmos-building-blocks/service": "^0.6.2",
+    "@cdk-cosmos/cdk-credentials-plugin": "^0.6.3",
+    "@cdk-cosmos/core": "^0.6.3",
+    "@cosmos-building-blocks/pipeline": "^0.6.3",
+    "@cosmos-building-blocks/service": "^0.6.3",
     "source-map-support": "^0.5.19"
   },
   "devDependencies": {
