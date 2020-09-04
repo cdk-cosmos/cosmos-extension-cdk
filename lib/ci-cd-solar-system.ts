@@ -33,7 +33,7 @@ export class AppCiCdSolarSystemStack extends SolarSystemExtensionStack {
     ecrRepo.grantPullPush(this.codePipeline.build);
   }
 
-  addCdkDeployEnvStageToPipeline(props: {
+  addCdkDeployEnvStageToCodePipeline(props: {
     name: string;
     stacks: Stack[];
     isManualApprovalRequired?: boolean;
