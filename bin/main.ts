@@ -41,8 +41,9 @@ cosmos.ecrRepo.grantPull(new AccountPrincipal(devGalaxy.account));
 //   tag: process.env.APP_BUILD_VERSION || "v1.0.0-1",
 // });
 // // Add a Deployment stage in App Pipeline to target this
-// ciCd.addCdkDeployEnvStageToPipeline({
-//   solarSystem: dev,
+// ciCd.addCdkDeployEnvStageToCodePipeline({
+//   name: "DeployDev",
+//   stacks: [dev],
 //   isManualApprovalRequired: false,
 // });
 
@@ -51,4 +52,7 @@ cosmos.ecrRepo.grantPull(new AccountPrincipal(devGalaxy.account));
 //   tag: process.env.APP_BUILD_VERSION || "v1.0.0-1",
 // });
 // // Add a Deployment stage in App Pipeline to target this
-// ciCd.addCdkDeployEnvStageToPipeline({ solarSystem: tst });
+// ciCd.addCdkDeployEnvStageToCodePipeline({
+//   name: "DeployTst",
+//   stacks: [tst],
+// });
