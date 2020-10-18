@@ -32,22 +32,22 @@ cosmos.ecrRepo.grantPull(new AccountPrincipal(devGalaxy.account));
 // TODO: Enable Solar Systems after bootstrap
 
 // // Extend the Dev SolarSystem, by creating service
-// const dev = new AppSolarSystemStack(devGalaxy, "Dev", {
-//   tag: process.env.APP_BUILD_VERSION || "v1.0.0-1",
+// const dev = new AppSolarSystemStack(devGalaxy, 'Dev', {
+//   tag: process.env.APP_BUILD_VERSION || 'v1.0.0-1',
 // });
-// // Add a Deployment stage in App Pipeline to target this
+// // Add a Deployment stage in App Pipeline to target this SolarSystem
 // ciCd.addCdkDeployEnvStageToCodePipeline({
-//   name: "DeployDev",
+//   name: 'DeployDev',
 //   stacks: [dev],
 //   isManualApprovalRequired: false,
 // });
 
 // // Extend the Dev SolarSystem, by creating service
-// const tst = new AppSolarSystemStack(devGalaxy, "Tst", {
-//   tag: process.env.APP_BUILD_VERSION || "v1.0.0-1",
+// const tst = new AppSolarSystemStack(devGalaxy, 'Tst', {
+//   tag: process.env.APP_BUILD_VERSION || 'v1.0.0-1',
 // });
-// // Add a Deployment stage in App Pipeline to target this
+// // Add a Deployment stage in App Pipeline to target this SolarSystem
 // ciCd.addCdkDeployEnvStageToCodePipeline({
-//   name: "DeployTst",
+//   name: 'DeployTst',
 //   stacks: [tst],
 // });
