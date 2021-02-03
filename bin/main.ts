@@ -5,7 +5,7 @@ import { AccountPrincipal } from '@aws-cdk/aws-iam';
 import { AppCosmosStack, AppGalaxyStack, AppSolarSystemStack, AppCiCdSolarSystemStack } from '../lib';
 
 // Cdk App
-const app = new App();
+export const app = new App();
 
 // AWS Env Config
 const mgtEnvConfig = { account: '1111', region: 'ap-southeast-2' };
