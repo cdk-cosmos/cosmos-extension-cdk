@@ -33,7 +33,7 @@ cosmos.ecrRepo.grantPull(new AccountPrincipal(devGalaxy.account));
 
 // // Extend the Dev SolarSystem, by creating service
 // const dev = new AppSolarSystemStack(devGalaxy, 'Dev', {
-//   tag: process.env.APP_BUILD_VERSION || 'v1.0.0-1',
+//   appVersion: process.env.APP_BUILD_VERSION,
 // });
 // // Add a Deployment stage in App Pipeline to target this SolarSystem
 // ciCd.addCdkDeployEnvStageToCodePipeline({
@@ -44,7 +44,7 @@ cosmos.ecrRepo.grantPull(new AccountPrincipal(devGalaxy.account));
 
 // // Extend the Dev SolarSystem, by creating service
 // const tst = new AppSolarSystemStack(devGalaxy, 'Tst', {
-//   tag: process.env.APP_BUILD_VERSION || 'v1.0.0-1',
+//   appVersion: process.env.APP_BUILD_VERSION,
 // });
 // // Add a Deployment stage in App Pipeline to target this SolarSystem
 // ciCd.addCdkDeployEnvStageToCodePipeline({
