@@ -9,7 +9,14 @@ export class AppCiCdSolarSystemStack extends SolarSystemExtensionStack {
   readonly codePipeline: DockerPipeline;
 
   constructor(galaxy: AppGalaxyStack, props?: SolarSystemExtensionStackProps) {
-    super(galaxy, 'CiCd', props);
+    super(galaxy, 'CiCd', {
+      portalProps: {
+        vpcProps: {
+          aZsLookup: true,
+        },
+      },
+      ...props
+    });
 
     this.addCiCd();
 
