@@ -15,6 +15,7 @@ export class AppCiCdSolarSystemStack extends SolarSystemExtensionStack {
           aZsLookup: true,
         },
       },
+      ...props
     });
 
     this.addCiCd();
