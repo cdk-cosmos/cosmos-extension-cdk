@@ -29,25 +29,23 @@ const devGalaxy = new AppGalaxyStack(cosmos, 'Dev', {
 // Allow the Dev Galaxy to access the ecr repo
 cosmos.ecrRepo.grantPull(new AccountPrincipal(devGalaxy.account));
 
-// TODO: Enable Solar Systems after bootstrap
+// Extend the Dev SolarSystem, by creating service
+const dev = new AppSolarSystemStack(devGalaxy, 'Dev', {
+  appVersion: process.env.APP_BUILD_VERSION,
+});
+// Add a Deployment stage in App Pipeline to target this SolarSystem
+ciCd.addCdkDeployEnvStageToCodePipeline({
+  name: 'DeployDev',
+  stacks: [dev],
+  isManualApprovalRequired: false,
+});
 
-// // Extend the Dev SolarSystem, by creating service
-// const dev = new AppSolarSystemStack(devGalaxy, 'Dev', {
-//   appVersion: process.env.APP_BUILD_VERSION,
-// });
-// // Add a Deployment stage in App Pipeline to target this SolarSystem
-// ciCd.addCdkDeployEnvStageToCodePipeline({
-//   name: 'DeployDev',
-//   stacks: [dev],
-//   isManualApprovalRequired: false,
-// });
-
-// // Extend the Dev SolarSystem, by creating service
-// const tst = new AppSolarSystemStack(devGalaxy, 'Tst', {
-//   appVersion: process.env.APP_BUILD_VERSION,
-// });
-// // Add a Deployment stage in App Pipeline to target this SolarSystem
-// ciCd.addCdkDeployEnvStageToCodePipeline({
-//   name: 'DeployTst',
-//   stacks: [tst],
-// });
+// Extend the Dev SolarSystem, by creating service
+const tst = new AppSolarSystemStack(devGalaxy, 'Tst', {
+  appVersion: process.env.APP_BUILD_VERSION,
+});
+// Add a Deployment stage in App Pipeline to target this SolarSystem
+ciCd.addCdkDeployEnvStageToCodePipeline({
+  name: 'DeployTst',
+  stacks: [tst],
+});
