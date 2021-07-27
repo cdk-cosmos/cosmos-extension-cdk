@@ -8,7 +8,7 @@ Object {
       "Export": Object {
         "Name": "AppDemoLibVersion",
       },
-      "Value": "0.8.11",
+      "Value": "0.8.12",
     },
     "ExportsOutputFnGetAttCdkRepoName": Object {
       "Export": Object {
@@ -1192,7 +1192,9 @@ Object {
                 },
               },
               "Effect": "Deny",
-              "Principal": "*",
+              "Principal": Object {
+                "AWS": "*",
+              },
               "Resource": Object {
                 "Fn::Join": Array [
                   "",
@@ -1734,7 +1736,9 @@ Object {
                 },
               },
               "Effect": "Deny",
-              "Principal": "*",
+              "Principal": Object {
+                "AWS": "*",
+              },
               "Resource": Object {
                 "Fn::Join": Array [
                   "",
